@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immeasurable Meditation Library</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1e2a4a 30%, #2d1b3d 70%, #4a2c2a 100%);
+            color: #f5f1eb;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(255, 107, 0, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(0, 123, 255, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0a1628 0%, rgba(30, 42, 74, 0.9) 50%, rgba(45, 27, 61, 0.8) 100%);
+            padding: 60px 20px 50px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 3px solid #ff6b00;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at top left, rgba(255, 107, 0, 0.2) 0%, transparent 60%),
+                radial-gradient(ellipse at bottom right, rgba(0, 123, 255, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ff6b00 0%, #ffa500 30%, #007bff 70%, #0056b3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+            position: relative;
+            z-index: 1;
+            letter-spacing: -2px;
+            line-height: 0.9;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.7;
+            margin-bottom: 35px;
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
+            color: #c8b5a0;
+        }
+
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%;
+            margin-bottom: 25px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 107, 0, 0.4);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .controls {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .search-box {
+            padding: 16px 28px;
+            border: 2px solid rgba(255, 107, 0, 0.3);
+            border-radius: 12px;
+            background: rgba(10, 22, 40, 0.8);
+            backdrop-filter: blur(15px);
+            color: #f5f1eb;
+            font-size: 16px;
+            font-weight: 500;
+            width: 380px;
+            outline: none;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .search-box:focus {
+            background: rgba(10, 22, 40, 0.95);
+            border-color: #ff6b00;
+            box-shadow: 0 12px 40px rgba(255, 107, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .search-box::placeholder {
+            color: rgba(200, 181, 160, 0.7);
+            font-weight: 400;
+        }
+
+        .filter-btn {
+            padding: 14px 24px;
+            border: 2px solid rgba(0, 123, 255, 0.3);
+            border-radius: 12px;
+            background: rgba(45, 27, 61, 0.6);
+            backdrop-filter: blur(10px);
+            color: #c8b5a0;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .filter-btn:hover {
+            background: rgba(0, 123, 255, 0.2);
+            border-color: #007bff;
+            color: #f5f1eb;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 123, 255, 0.3);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #ff6b00 0%, #ffa500 100%);
+            border-color: #ff6b00;
+            color: #0a1628;
+            font-weight: 700;
+            box-shadow: 0 8px 32px rgba(255, 107, 0, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .stats {
+            text-align: center;
+            margin: 30px 0 20px 0;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #c8b5a0;
+            background: rgba(200, 181, 160, 0.1);
+            padding: 12px 24px;
+            border-radius: 8px;
+            display: inline-block;
+            border: 1px solid rgba(255, 107, 0, 0.2);
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            padding: 50px 40px;
+            max-width: 1800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .video-card {
+            background: linear-gradient(135deg, rgba(10, 22, 40, 0.9) 0%, rgba(45, 27, 61, 0.8) 100%);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid rgba(255, 107, 0, 0.2);
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .video-card:hover {
+            transform: translateY(-12px) scale(1.03) rotateX(5deg);
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.6), 0 16px 32px rgba(255, 107, 0, 0.3);
+            border-color: #ff6b00;
+            background: linear-gradient(135deg, rgba(10, 22, 40, 0.95) 0%, rgba(45, 27, 61, 0.9) 100%);
+        }
+
+        .video-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 107, 0, 0.15) 0%, rgba(0, 123, 255, 0.1) 50%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .video-card:hover::before {
+            opacity: 1;
+        }
+
+        .video-card::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff6b00, #007bff, #ff6b00);
+            border-radius: 18px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .video-card:hover::after {
+            opacity: 0.6;
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            z-index: 2;
+            filter: contrast(1.1) saturate(1.2);
+        }
+
+        .video-card:hover .video-thumbnail {
+            transform: scale(1.08);
+            filter: contrast(1.3) saturate(1.4) brightness(1.1);
+        }
+
+        .video-thumbnail.error {
+            background: rgba(212, 175, 55, 0.2);
+            color: #d4af37;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        .video-info {
+            padding: 20px 22px 22px 22px;
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+        }
+
+        .video-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1.2;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            color: #f5f1eb;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .video-description {
+            font-size: 0.9rem;
+            color: #c8b5a0;
+            margin-bottom: 14px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.4;
+            font-weight: 400;
+        }
+
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: rgba(200, 181, 160, 0.8);
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .video-category {
+            background: linear-gradient(135deg, #ff6b00 0%, #ffa500 100%);
+            color: #0a1628;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 12px rgba(255, 107, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10, 22, 40, 0.95) 0%, rgba(45, 27, 61, 0.95) 100%);
+            backdrop-filter: blur(20px);
+        }
+
+        .modal-content {
+            position: relative;
+            background: linear-gradient(135deg, rgba(10, 22, 40, 0.9) 0%, rgba(45, 27, 61, 0.8) 100%);
+            backdrop-filter: blur(30px);
+            margin: 3% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 85vh;
+            overflow-y: auto;
+            border: 2px solid rgba(255, 107, 0, 0.3);
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .close {
+            color: #c8b5a0;
+            float: right;
+            font-size: 32px;
+            font-weight: 900;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            padding: 8px;
+            border-radius: 50%;
+            background: rgba(255, 107, 0, 0.1);
+        }
+
+        .close:hover {
+            color: #ff6b00;
+            background: rgba(255, 107, 0, 0.2);
+            transform: scale(1.1);
+        }
+
+        .video-player {
+            width: 100%;
+            height: 500px;
+            border: none;
+        }
+
+        .modal h2 {
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #ff6b00 0%, #ffa500 30%, #007bff 70%, #0056b3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .modal p {
+            margin-bottom: 12px;
+            line-height: 1.6;
+            color: #c8b5a0;
+            font-weight: 400;
+        }
+
+        .status-banner {
+            margin: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .success-banner {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.2) 0%, rgba(0, 123, 255, 0.2) 100%);
+            border: 2px solid #4caf50;
+            color: #66bb6a;
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .warning-banner {
+            background: rgba(255, 152, 0, 0.2);
+            border: 2px solid #ff9800;
+            color: #ff9800;
+        }
+
+        .error-banner {
+            background: linear-gradient(135deg, rgba(244, 67, 54, 0.2) 0%, rgba(156, 39, 176, 0.2) 100%);
+            border: 2px solid #f44336;
+            color: #ff6b6b;
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px;
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #c8b5a0;
+            background: linear-gradient(135deg, rgba(255, 107, 0, 0.1) 0%, rgba(0, 123, 255, 0.1) 100%);
+            border-radius: 16px;
+            margin: 40px;
+            border: 1px solid rgba(255, 107, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px 15px 35px 15px;
+            }
+
+            .header h1 {
+                font-size: 1rem;
+                letter-spacing: -1px;
+            }
+
+            .controls {
+                gap: 12px;
+                margin-top: 25px;
+            }
+
+            .search-box {
+                width: 280px;
+                padding: 14px 20px;
+            }
+
+            .filter-btn {
+                padding: 12px 18px;
+                font-size: 13px;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+                padding: 30px 20px;
+                gap: 20px;
+            }
+
+            .video-card:hover {
+                transform: translateY(-8px) scale(1.02);
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 5% auto;
+                padding: 20px;
+            }
+
+            .modal h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .search-box {
+                width: 240px;
+            }
+
+            .video-grid {
+                padding: 20px 15px;
+            }
+
+            .video-card {
+                border-radius: 12px;
+            }
+
+            .video-info {
+                padding: 16px 18px;
+            }
+
+            .video-title {
+                font-size: 1.05rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Immeasurable Meditation Library</h1>
+        
+        
+        <div class="controls">
+            <input type="text" class="search-box" placeholder="Search videos..." id="searchBox">
+            <button class="filter-btn active" data-category="all">All Videos</button>
+            <button class="filter-btn" data-category="Longchenpa">Longchenpa</button>
+            <button class="filter-btn" data-category="Dzogchen">Dzogchen</button>
+            <button class="filter-btn" data-category="Padmasambhava">Padmasambhava</button>
+            <button class="filter-btn" data-category="Mahayana">Mahayana</button>
+            <button class="filter-btn" data-category="Mahamudra">Mahamudra</button>
+        </div>
+        
+        <div class="stats" id="stats">Loading video library...</div>
+    </div>
+
+    <div id="loadingIndicator" class="loading">
+        🧘‍♀️ Loading your Tibetan Buddhist video library...<br>
+        <small>Trying multiple hosting sources...</small>
+    </div>
+
+    <div class="video-grid" id="videoGrid" style="display: none;">
+        <!-- Videos will be loaded here -->
+    </div>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <div class="video-category" id="modalCategory"></div>
+            </div>
+            <div class="iframe-container">
+                <iframe class="video-player" id="videoPlayer" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 🔧 HOSTING CONFIGURATION - Update these URLs as needed
+        const HOSTING_OPTIONS = [
+            {
+                name: 'Video Library',
+                url: 'https://gist.githubusercontent.com/lhuabu/9cee6a2e512753cf4377fc7a757a23bd/raw',
+                description: 'Your GitHub Gist with 87 Tibetan Buddhist videos'
+            },
+            {
+                name: 'GitHub Raw',
+                url: 'https://raw.githubusercontent.com/YOUR_USERNAME/tibetan-buddhist-videos/main/videos.csv',
+                description: 'Replace YOUR_USERNAME with your GitHub username'
+            },
+            {
+                name: 'Netlify Drop',
+                url: 'https://YOUR_SITE.netlify.app/videos.csv',
+                description: 'Replace with your Netlify drop URL'
+            },
+            {
+                name: 'Google Sheets',
+                url: 'https://docs.google.com/spreadsheets/d/1_XQG2jqNRvoNOAyguWvIG4nml4EzpLoc01CW3_IPuJg/export?format=csv',
+                description: 'Your current Google Sheets URL'
+            },
+            {
+                name: 'Local Server',
+                url: 'http://localhost:8000/dharma_stream_google_sheets_ready.csv',
+                description: 'For local testing with Python HTTP server'
+            }
+        ];
+        
+        let allVideos = [];
+        let currentFilter = 'all';
+        let currentSearchTerm = '';
+        let loadedFrom = '';
+
+        // Initialize the page
+        async function init() {
+            setupEventListeners();
+            await loadVideos();
+        }
+
+        async function loadVideos() {
+            const loadingDiv = document.getElementById('loadingIndicator');
+            const videoGrid = document.getElementById('videoGrid');
+            
+            // Show hosting configuration
+            showHostingConfig();
+            
+            // Try each hosting option in order
+            for (let i = 0; i < HOSTING_OPTIONS.length; i++) {
+                const option = HOSTING_OPTIONS[i];
+                
+                try {
+                    loadingDiv.innerHTML = `🔄 Trying ${option.name}...<br><small>${option.description}</small>`;
+                    console.log(`Attempting to load from ${option.name}: ${option.url}`);
+                    
+                    const response = await fetch(option.url, {
+                        mode: 'cors',
+                        headers: {
+                            'Accept': 'text/csv,text/plain,*/*'
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        const csvData = await response.text();
+                        
+                        if (csvData && csvData.length > 100) {
+                            const videos = parseCSV(csvData);
+                            
+                            if (videos.length > 0) {
+                                allVideos = videos;
+                                loadedFrom = option.name;
+                                
+                                displayVideos(videos);
+                                updateStats(videos);
+                                
+                                loadingDiv.style.display = 'none';
+                                videoGrid.style.display = 'grid';
+                                
+                                showSuccessBanner(option.name, videos.length);
+                                console.log(`✅ Successfully loaded ${videos.length} videos from ${option.name}`);
+                                return;
+                            }
+                        }
+                    }
+                    
+                } catch (error) {
+                    console.log(`❌ ${option.name} failed:`, error.message);
+                    continue;
+                }
+            }
+            
+            // If all hosting options fail, load demo data
+            console.log('🔄 All hosting options failed, loading demo data...');
+            loadingDiv.innerHTML = '⚠️ Loading demo data...<br><small>All hosting sources unavailable</small>';
+            
+            setTimeout(() => {
+                loadDemoData();
+                loadingDiv.style.display = 'none';
+                videoGrid.style.display = 'grid';
+                showWarningBanner();
+            }, 1000);
+        }
+
+        function showHostingConfig() {
+            // Configuration display removed for cleaner UI
+        }
+
+        function showSuccessBanner(source, count) {
+            // Success banner removed for cleaner Netflix-like UI
+        }
+
+        function showWarningBanner() {
+            const banner = document.createElement('div');
+            banner.className = 'status-banner warning-banner';
+            banner.innerHTML = `
+                ⚠️ Using demo data (7 videos). To load full library (87 videos):<br>
+                <small>1. Upload your CSV to GitHub, Netlify, or another host</small><br>
+                <small>2. Update the HOSTING_OPTIONS URLs in the code</small><br>
+                <small>3. Refresh this page</small>
+            `;
+            document.querySelector('.header').appendChild(banner);
+        }
+
+        function loadDemoData() {
+            // Demo data with key videos from each category
+            allVideos = [
+                {
+                    youtubeId: "nhsib-IY1kg",
+                    title: "Prayer of Light ~ Metta Meditation ~ Generation of Bodhicitta ~ Four Immeasurables",
+                    description: "This is a Universal Prayer applicable for any spiritual or religious context and practice. It focuses on developing and generating love or loving kindness and compassion (metta and karuna), peace (equanimity/upekkha), and light (wisdom, joy: mudita).",
+                    publishedAt: "2023-01-13T21:00:10Z",
+                    channelTitle: "Samaneri Jayasāra - Wisdom of the Masters",
+                    viewCount: "79040",
+                    likeCount: "1161",
+                    commentCount: "100",
+                    thumbnailUrl: "https://i.ytimg.com/vi/nhsib-IY1kg/hqdefault.jpg",
+                    category: "Mahayana",
+                    featured: "Yes"
+                },
+                {
+                    youtubeId: "sp0p6V532Cw",
+                    title: "Longchenpa ~ Gone to Suchness ~ Dzogchen",
+                    description: "These profound teachings from Longchenpa have been formatted for guided meditation purposes. Excerpts taken from the text 'A Treasure Trove of Scriptural Transmission.'",
+                    publishedAt: "2023-06-03T22:20:43Z",
+                    channelTitle: "Samaneri Jayasāra - Wisdom of the Masters",
+                    viewCount: "78321",
+                    likeCount: "1400",
+                    commentCount: "83",
+                    thumbnailUrl: "https://i.ytimg.com/vi/sp0p6V532Cw/hqdefault.jpg",
+                    category: "Longchenpa",
+                    featured: "Yes"
+                },
+                {
+                    youtubeId: "ZVaKwhB00lM",
+                    title: "Longchenpa ~ Three Statements That Strike the Vital Point (Commentary Garab Dorje) ~ Dzogchen",
+                    description: "Longchenpa's Explanation of the Three Statements That Strike the Vital Point (by Garab Dorje). 1. Be introduced to your own nature. 2. Decide upon one thing. 3. Gain confidence in liberation.",
+                    publishedAt: "2024-12-16T20:08:28Z",
+                    channelTitle: "Samaneri Jayasāra - Wisdom of the Masters",
+                    viewCount: "70044",
+                    likeCount: "1592",
+                    commentCount: "109",
+                    thumbnailUrl: "https://i.ytimg.com/vi/ZVaKwhB00lM/maxresdefault.jpg",
+                    category: "Longchenpa",
+                    featured: "Yes"
+                },
+                {
+                    youtubeId: "Q_oPtD2Eckg",
+                    title: "Padmasambhava - Direct Pointing Out Instructions - Dzogchen",
+                    description: "This is a meditation on the teaching entitled 'Pointing the Staff at the Old Man' from the book - Advice from the Lotus Born - A Collection of Padmasambhava's Advice to the Dakini Yeshe Tsogyal and Other Close Disciples.",
+                    publishedAt: "2021-09-26T21:59:38Z",
+                    channelTitle: "Samaneri Jayasāra - Wisdom of the Masters",
+                    viewCount: "76940",
+                    likeCount: "1941",
+                    commentCount: "99",
+                    thumbnailUrl: "https://i.ytimg.com/vi/Q_oPtD2Eckg/hqdefault.jpg",
+                    category: "Padmasambhava",
+                    featured: "Yes"
+                },
+                {
+                    youtubeId: "A34zMe7EDPE",
+                    title: "Tilopa's Six Essential Points of Meditation - Mahamudra - Kagyu Tibetan Buddhism",
+                    description: "Tilopa's classic 6 words of advice for meditation - translated by Ken McLeod. Ken McLeod has translated the text in two ways: a version that's as concise and literal as possible, and a version that's slightly more elaborate.",
+                    publishedAt: "2020-11-20T06:45:51Z",
+                    channelTitle: "Samaneri Jayasāra - Wisdom of the Masters",
+                    viewCount: "112032",
+                    likeCount: "2593",
+                    commentCount: "179",
+                    thumbnailUrl: "https://i.ytimg.com/vi/A34zMe7EDPE/hqdefault.jpg",
+                    category: "Mahamudra",
+                    featured: "Yes"
+                },
+                {
+                    youtubeId: "muUuSDMr5oE",
+                    title: "Naked Consciousness ~ Longchenpa - Dzogchen",
+                    description: "These profound teachings from Longchenpa have been formatted for guided meditation purposes. Excerpts taken from the text 'A Treasure Trove of Scriptural Transmission.'",
+                    publishedAt: "2023-08-26T22:02:59Z",
+                    channelTitle: "Samaneri Jayasāra - Wisdom of the Masters",
+                    viewCount: "68293",
+                    likeCount: "1417",
+                    commentCount: "78",
+                    thumbnailUrl: "https://i.ytimg.com/vi/muUuSDMr5oE/hqdefault.jpg",
+                    category: "Longchenpa",
+                    featured: "Yes"
+                },
+                {
+                    youtubeId: "0im9mBYPRVs",
+                    title: "Garab Dorje ~ The Truth of your Being ~ Dzogchen (Ati Yoga)",
+                    description: "A reading for meditation of Garab Dorje's primary teaching, 'The Spaciousness of Vajrasattva' (Dorje Sempa Namkha Che) - complied by Yeshe Donden (Roger Calverley).",
+                    publishedAt: "2023-04-09T21:33:59Z",
+                    channelTitle: "Samaneri Jayasāra - Wisdom of the Masters",
+                    viewCount: "217612",
+                    likeCount: "3827",
+                    commentCount: "205",
+                    thumbnailUrl: "https://i.ytimg.com/vi/0im9mBYPRVs/hqdefault.jpg",
+                    category: "Dzogchen",
+                    featured: "Yes"
+                }
+            ];
+            
+            loadedFrom = 'Demo Data';
+            displayVideos(allVideos);
+            updateStats(allVideos);
+        }
+
+        function cleanNumericField(value) {
+            if (!value || value === '' || value === 'undefined' || value === 'null') {
+                return '0';
+            }
+            // Remove any non-numeric characters except digits
+            const cleaned = value.toString().replace(/[^\d]/g, '');
+            return cleaned || '0';
+        }
+
+        function parseCSV(csvText) {
+            // Handle multi-line CSV fields properly
+            const rows = [];
+            let currentRow = '';
+            let inQuotes = false;
+            
+            // Split by lines but handle quoted multi-line fields
+            const lines = csvText.split('\n');
+            
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i];
+                currentRow += (currentRow ? '\n' : '') + line;
+                
+                // Count quotes to determine if we're still in a quoted field
+                let quoteCount = 0;
+                for (let j = 0; j < currentRow.length; j++) {
+                    if (currentRow[j] === '"') quoteCount++;
+                }
+                
+                // If quote count is even, we've closed all quoted fields
+                if (quoteCount % 2 === 0) {
+                    rows.push(currentRow);
+                    currentRow = '';
+                }
+            }
+            
+            // Add any remaining row
+            if (currentRow.trim()) {
+                rows.push(currentRow);
+            }
+            
+            const headers = parseCSVLine(rows[0]);
+            const videos = [];
+            
+            for (let i = 1; i < rows.length; i++) {
+                if (rows[i].trim()) {
+                    const values = parseCSVLine(rows[i]);
+                    const video = {};
+                    headers.forEach((header, index) => {
+                        video[header] = values[index] || '';
+                    });
+                    
+                    // Handle both original format and Google Sheets format
+                    if (video['Video ID']) {
+                        // Google Sheets format
+                        video.youtubeId = video['Video ID'].trim();
+                        video.title = video['Title'] || 'Untitled Video';
+                        video.description = video['Description'] || 'No description available';
+                        video.publishedAt = video['Published Date'] || '';
+                        video.channelTitle = video['Channel'] || 'Samaneri Jayasāra - Wisdom of the Masters';
+                        
+                        // Handle numeric fields more carefully
+                        video.viewCount = cleanNumericField(video['View Count']);
+                        video.likeCount = cleanNumericField(video['Like Count']);
+                        video.commentCount = cleanNumericField(video['Comment Count']);
+                        
+                        // Handle thumbnail URL with fallback
+                        video.thumbnailUrl = video['Thumbnail URL'] || `https://i.ytimg.com/vi/${video.youtubeId}/hqdefault.jpg`;
+                        
+                        video.category = video['Category'] || categorizeVideo(video['Topics'] || '');
+                        video.topics = video['Topics'] || '';
+                        video.featured = video['Featured'] || 'No';
+                        
+                    } else if (video.videoUrl) {
+                        // Original format
+                        video.youtubeId = video.videoUrl.split('watch?v=')[1]?.split('&')[0] || '';
+                        video.category = categorizeVideo(video.matched_topics || '');
+                        video.viewCount = cleanNumericField(video.viewCount);
+                        video.likeCount = cleanNumericField(video.likeCount);
+                        video.commentCount = cleanNumericField(video.commentCount);
+                    }
+                    
+                    // Only add videos with valid YouTube IDs
+                    if (video.youtubeId && video.youtubeId.length > 5) {
+                        videos.push(video);
+                    }
+                }
+            }
+            
+            return videos;
+        }
+
+        function parseCSVLine(line) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+            
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                
+                if (char === '"') {
+                    if (inQuotes && line[i + 1] === '"') {
+                        // Handle escaped quotes (double quotes)
+                        current += '"';
+                        i++; // Skip next quote
+                    } else {
+                        inQuotes = !inQuotes;
+                    }
+                } else if (char === ',' && !inQuotes) {
+                    // End of field
+                    result.push(current.replace(/^"|"$/g, '').trim());
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            
+            // Add the last field
+            result.push(current.replace(/^"|"$/g, '').trim());
+            
+            // Ensure we have the right number of fields (15 expected)
+            while (result.length < 15) {
+                result.push('');
+            }
+            
+            return result;
+        }
+
+        function categorizeVideo(topics) {
+            const topicsList = topics.split(', ');
+            
+            if (topicsList.includes('Longchenpa') || topicsList.includes('Longchen Rabjam')) {
+                return 'Longchenpa';
+            } else if (topicsList.includes('Padmasambhava')) {
+                return 'Padmasambhava';
+            } else if (topicsList.includes('Mahamudra')) {
+                return 'Mahamudra';
+            } else if (topicsList.includes('Mahayana (Tibetan/Indian)')) {
+                return 'Mahayana';
+            } else if (topicsList.includes('Dzogchen')) {
+                return 'Dzogchen';
+            } else {
+                return 'General';
+            }
+        }
+
+        function setupEventListeners() {
+            // Search functionality
+            document.getElementById('searchBox').addEventListener('input', (e) => {
+                currentSearchTerm = e.target.value.toLowerCase();
+                filterAndDisplayVideos();
+            });
+
+            // Category filters
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentFilter = e.target.dataset.category;
+                    filterAndDisplayVideos();
+                });
+            });
+
+            // Modal functionality
+            const modal = document.getElementById('videoModal');
+            const closeBtn = document.querySelector('.close');
+            
+            closeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+                document.getElementById('videoPlayer').src = '';
+            });
+            
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.getElementById('videoPlayer').src = '';
+                }
+            });
+        }
+
+        function filterAndDisplayVideos() {
+            let filteredVideos = allVideos;
+
+            // Apply category filter
+            if (currentFilter !== 'all') {
+                filteredVideos = filteredVideos.filter(video => 
+                    video.category === currentFilter
+                );
+            }
+
+            // Apply search filter
+            if (currentSearchTerm) {
+                filteredVideos = filteredVideos.filter(video =>
+                    video.title.toLowerCase().includes(currentSearchTerm) ||
+                    video.description.toLowerCase().includes(currentSearchTerm)
+                );
+            }
+
+            displayVideos(filteredVideos);
+            updateStats(filteredVideos);
+        }
+
+        function displayVideos(videos) {
+            const grid = document.getElementById('videoGrid');
+            
+            if (videos.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 50px;">
+                        <h3>No videos found</h3>
+                        <p>Try adjusting your search or filter criteria.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = videos.map((video, index) => {
+                // Clean and escape video data
+                const safeTitle = (video.title || 'Untitled Video').replace(/'/g, "\\'").replace(/"/g, '\\"');
+                const safeDescription = (video.description || 'No description available').substring(0, 200) + '...';
+                const thumbnailUrl = video.thumbnailUrl || `https://i.ytimg.com/vi/${video.youtubeId}/hqdefault.jpg`;
+                const category = video.category || 'General';
+                
+                // Handle numeric values more carefully
+                const viewCount = Math.max(0, parseInt(video.viewCount) || 0);
+                const likeCount = Math.max(0, parseInt(video.likeCount) || 0);
+                const commentCount = Math.max(0, parseInt(video.commentCount) || 0);
+                
+                // Special handling for videos with very low engagement
+                const displayViews = viewCount === 0 ? 'New' : viewCount.toLocaleString();
+                const displayLikes = likeCount === 0 ? '0' : likeCount.toLocaleString();
+                
+                return `
+                <div class="video-card" onclick="openVideo('${video.youtubeId}', '${safeTitle}', '${category}')">
+                    <img src="${thumbnailUrl}" 
+                         alt="${safeTitle}" 
+                         class="video-thumbnail" 
+                         loading="lazy"
+                         onerror="this.className='video-thumbnail error'; this.innerHTML='🎬<br>Thumbnail<br>Unavailable'; this.style.objectFit='none';">
+                    <div class="video-info">
+                        <h3 class="video-title">${safeTitle}</h3>
+                        <p class="video-description">${safeDescription}</p>
+                        <div class="video-meta">
+                            <span>👁️ ${displayViews} views</span>
+                            <span>👍 ${displayLikes}</span>
+                        </div>
+                        <div class="video-category">${category}</div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function updateStats(videos) {
+            const stats = document.getElementById('stats');
+            const total = videos.length;
+            const categories = {};
+            
+            videos.forEach(video => {
+                categories[video.category] = (categories[video.category] || 0) + 1;
+            });
+            
+            const categoryText = Object.entries(categories)
+                .map(([cat, count]) => `${cat}: ${count}`)
+                .join(' | ');
+            
+            stats.innerHTML = `📊 ${total} videos from ${loadedFrom} | ${categoryText}`;
+        }
+
+        function openVideo(youtubeId, title, category) {
+            const modal = document.getElementById('videoModal');
+            const player = document.getElementById('videoPlayer');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalCategory = document.getElementById('modalCategory');
+            
+            modalTitle.textContent = title;
+            modalCategory.textContent = category;
+            player.src = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0&playsinline=1`;
+            modal.style.display = 'block';
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
